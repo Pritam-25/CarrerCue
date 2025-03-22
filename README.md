@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+![alt text](./public/er_diagram_of_models.png)
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
