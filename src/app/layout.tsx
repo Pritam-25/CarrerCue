@@ -3,17 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkThemeWrapper, ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import { ModeToggle } from "@/components/mode_toggle";
+
 import Header from "@/components/header";
-import { dark } from "@clerk/themes"; // Only dark theme exists
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

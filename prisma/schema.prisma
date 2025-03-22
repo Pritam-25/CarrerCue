@@ -7,75 +7,97 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id          String   @id @default(uuid())
   clerkUserId String   @unique
-  email       String?
+  name        String
+  email       String   @unique
   imageUrl    String?
-  industry    String?  @relation(fields: [industryId], references: [id])
-  industryId  String?  
+  industry    String? // Foreign key
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  bio         String?
-  experience  Int?
-  skill       String[] 
-  Resume      Resume?
-  Assessments Assessment[]
-  CoverLetter CoverLetter[]
+
+  bio        String?
+  experience Int?
+  skill      String[]
+
+  resume      Resume?
+  assessments Assessment[]
+  coverLetter CoverLetter[]
+
+  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
 }
 
 model Resume {
-  id         String   @id @default(uuid())
-  userId     String   @unique @relation(fields: [userId], references: [id])
-  content    String
-  atsScore   Float?
-  feedback   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  content   String   @db.Text
+  atsScore  Float?
+  feedback  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  User       User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Assessment {
-  id             String   @id @default(uuid())
-  userId         String   @relation(fields: [userId], references: [id])
+  id             String   @id @default(cuid())
+  userId         String
   quizScore      Float
-  question       Json[]
-  category       String
+  question       Json[] 
+  category       String 
   improvementTip String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  User           User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model CoverLetter {
-  id            String   @id @default(uuid())
-  userId        String   @relation(fields: [userId], references: [id])
-  content       String
+  id             String   @id @default(uuid())
+  userId         String
+  content        String 
   jobDescription String?
-  companyName   String
-  jobTitle      String
-  status        String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  companyName    String
+  jobTitle       String
+  status         String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  User          User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model IndustryInsight {
-  id                String   @id @default(uuid())
-  industry          String   @unique
-  salaryRange       Json[]
-  growthRate        Float
-  demandLevel       String
-  topSkills        String[]
-  marketOutlook     String
-  keyTrends        String[]
-  recommendedSkills String[]
-  lastUpdated       DateTime
-  nextUpdate        DateTime
+  id       String @id @default(cuid())
+  industry String @unique
 
-  Users            User[]
+  salaryRange Json[] // Array of {role: string, min: float, max: float, median: float, location: string?}
+
+  growthRate  Float
+  demandLevel DemandLevel
+  topSkills   String[]
+
+  marketOutlook MarketOutlook
+  keyTrends     String[]
+
+  recommendedSkills String[]
+
+  lastUpdated DateTime
+  nextUpdate  DateTime
+
+  users User[]
+
+  @@index([industry])
+}
+
+enum DemandLevel {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum MarketOutlook {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
 }
