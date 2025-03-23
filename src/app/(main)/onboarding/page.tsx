@@ -9,9 +9,9 @@ export default async function OnboardingPage() {
     isOnboard: false,
   };
 
-  // if (isOnboard) {
-  //   redirect(ApiRoute.DASHBOARD);
-  // }
+  if (isOnboard) {
+    redirect(ApiRoute.DASHBOARD);
+  }
 
   return (
     <main>
