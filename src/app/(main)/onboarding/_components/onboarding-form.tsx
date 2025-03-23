@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import {
   Card,
@@ -23,9 +26,22 @@ interface OnboardingFormProps {
 }
 
 export default function OnboardingPage({ industries }: OnboardingFormProps) {
-  const [isOnboard, setIsOnboard] = useState<boolean | null>(null);
-  const [selectIndustry, setSelectIndustry] = useState<string | null>(null);
-  const router = useRouter();
+  // const [isOnboard, setIsOnboard] = useState<boolean | null>(null);
+  // const [selectIndustry, setSelectIndustry] = useState<string | null>(null);
+  // const router = useRouter();
+
+  // const schema = z.object({
+  //   name: z.string().min(1, { message: "Required" }),
+  //   age: z.number().min(10),
+  // });
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm({
+  //   resolver: zodResolver(schema),
+  // });
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { getUserOnboardingStatus } from "@/app/api/user/route";
+import { getUserOnboardingStatus } from "@/actions/user";
 import { ApiRoute } from "@/constants/routes";
 import { redirect } from "next/navigation";
 

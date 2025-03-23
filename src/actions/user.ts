@@ -1,3 +1,4 @@
+"use server"
 import db from '@/lib/prisma';
 import { DemandLevel, MarketOutlook, User } from '@prisma/client';
 import { authenticateUser } from "@/lib/authenticateUser"
