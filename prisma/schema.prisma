@@ -19,7 +19,7 @@ model User {
 
   bio        String?
   experience Int?
-  skill      String[]
+  skills      String[]
 
   resume      Resume?
   assessments Assessment[]

@@ -49,7 +49,7 @@ export async function updateUser(data: Partial<User>) {
                         industry: data.industry ?? undefined,  // Keeps existing industry if not provided
                         experience: data.experience ?? undefined,
                         bio: data.bio ?? undefined,
-                        skill: data.skill ?? undefined
+                        skills: data.skills ?? undefined
                     }
                 })
 

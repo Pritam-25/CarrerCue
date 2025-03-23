@@ -65,6 +65,8 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
   });
 
   const onSubmit = async (values: onboardingFormData) => {
+    console.log(values);
+    
     const formattedIndustry = `${values.industry}-${values.subIndustry}`
       .toLowerCase()
       .replace(/ /g, "-");

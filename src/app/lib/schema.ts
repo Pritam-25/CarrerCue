@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { User } from "@prisma/client";
+import { z, ZodType } from "zod";
 
 export const onboardingSchema = z.object({
     industry: z.string({

@@ -21,7 +21,9 @@ const useFetch = <T, Args extends any[]>(
         } catch (err) {
             const errorMessage =
                 err instanceof Error ? err.message : "An unexpected error occurred";
-            const error = new Error(errorMessage);
+            console.log(errorMessage);
+
+            const error = new Error("An unexpected error occurred");
             setError(error);
             toast.error(error.message);
             return null; // Ensure function always returns something
