@@ -1,0 +1,14 @@
+import { getUserOnboardingStatus } from "@/app/api/user/route";
+import { ApiRoute } from "@/constants/routes";
+import { redirect } from "next/navigation";
+
+export default async function IndustryInsightsPage() {
+
+  const { isOnboard } = (await getUserOnboardingStatus()) ?? {
+    isOnboard: false,
+  };
+
+  if(!isOnboard) redirect(ApiRoute.ONBOARDING)
+
+  return <div>IndustryInsights Page</div>;
+}
