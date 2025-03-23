@@ -1,10 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import {
   Card,
@@ -27,6 +26,11 @@ import { onboardingFormData, onboardingSchema } from "@/app/lib/schema";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import useFetch from "@/hooks/use-fetch";
+import { updateUser } from "@/actions/user";
+import { toast } from "sonner";
+import { ApiRoute } from "@/constants/routes";
+import { Loader } from "lucide-react";
 
 interface Industries {
   id: string;
@@ -38,11 +42,17 @@ interface OnboardingFormProps {
   industries: Industries[];
 }
 
-export default function OnboardingPage({ industries }: OnboardingFormProps) {
+export default function OnboardingForm({ industries }: OnboardingFormProps) {
   const [selectedIndustry, setSelectedIndustry] = useState<Industries | null>(
     null
   );
   const router = useRouter();
+
+  const {
+    loading: updateLoading,
+    fn: updateUserFn,
+    data: updatedUserData,
+  } = useFetch(updateUser);
 
   const {
     register,
@@ -54,9 +64,28 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
     resolver: zodResolver(onboardingSchema),
   });
 
-  const onSubmit = async (value: any) => {
-    console.log(value);
+  const onSubmit = async (values: onboardingFormData) => {
+    const formattedIndustry = `${values.industry}-${values.subIndustry}`
+      .toLowerCase()
+      .replace(/ /g, "-");
+
+    await updateUserFn({
+      ...values,
+      industry: formattedIndustry,
+    });
   };
+
+  useEffect(() => {
+    if (updatedUserData?.success && !updateLoading) {
+      toast.success("Profile update successfully");
+      router.push(ApiRoute.DASHBOARD);
+      router.refresh();
+    }
+
+    return () => {
+      // second;
+    };
+  }, [updatedUserData, updateLoading]);
 
   return (
     <div className="flex items-center justify-center bg-background">
@@ -74,7 +103,9 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             {/* Industry Selection */}
             <div className="space-y-2">
-              <Label className="text-primary/70" htmlFor="industry">Industry</Label>
+              <Label className="text-primary/70" htmlFor="industry">
+                Industry
+              </Label>
               <Select
                 onValueChange={(value) => {
                   const selected =
@@ -105,7 +136,9 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
             {/* Sub-Industry Selection */}
             {selectedIndustry && selectedIndustry.subIndustries.length > 0 && (
               <div className="space-y-2">
-                <Label className="text-primary/70" htmlFor="subIndustry">Specialization</Label>
+                <Label className="text-primary/70" htmlFor="subIndustry">
+                  Specialization
+                </Label>
                 <Select
                   onValueChange={(value) => {
                     setValue("subIndustry", value);
@@ -132,7 +165,9 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
 
             {/* Experience */}
             <div className="space-y-2">
-              <Label className="text-primary/70" htmlFor="experience">Years of Experience</Label>
+              <Label className="text-primary/70" htmlFor="experience">
+                Years of Experience
+              </Label>
               <Input
                 id="experience"
                 type="number"
@@ -150,7 +185,9 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
 
             {/* Skills */}
             <div className="space-y-2">
-              <Label className="text-primary/70" htmlFor="skills">Skills</Label>
+              <Label className="text-primary/70" htmlFor="skills">
+                Skills
+              </Label>
               <Input
                 id="skills"
                 placeholder="Enter your skills"
@@ -160,15 +197,15 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
                 Separate multiple skills with commas
               </p>
               {errors.skills && (
-                <p className="text-red-500 text-sm">
-                  {errors.skills.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.skills.message}</p>
               )}
             </div>
 
             {/* Bio */}
             <div className="space-y-2">
-              <Label className="text-primary/70" htmlFor="bio">Professional Bio</Label>
+              <Label className="text-primary/70" htmlFor="bio">
+                Professional Bio
+              </Label>
               <Textarea
                 id="bio"
                 placeholder="Tell us about your professional background..."
@@ -181,8 +218,15 @@ export default function OnboardingPage({ industries }: OnboardingFormProps) {
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full">
-              Complete Profile
+            <Button type="submit" className="w-full" disabled={updateLoading}>
+              {updateLoading ? (
+                <>
+                  <Loader className="mr-2 h-4 w-4 animate-spin" />
+                  Updating Profile...
+                </>
+              ) : (
+                "Complete Profile"
+              )}
             </Button>
           </form>
         </CardContent>

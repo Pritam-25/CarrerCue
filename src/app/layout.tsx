@@ -38,7 +38,6 @@ export default function RootLayout({
           <ClerkThemeWrapper>
             <Header />
             <main className="container mx-auto">{children}</main>
-            <Toaster richColors />
           </ClerkThemeWrapper>
         </ThemeProvider>
       </body>

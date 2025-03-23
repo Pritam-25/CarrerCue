@@ -4,6 +4,7 @@ import * as React from "react";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "sonner";
 
 export function ThemeProvider({
   children,
@@ -26,6 +27,18 @@ export function ClerkThemeWrapper({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+      <ThemedToaster />
     </ClerkProvider>
+  );
+}
+
+function ThemedToaster() {
+  const { theme } = useTheme(); // Get the current theme
+
+  return (
+    <Toaster
+      theme={theme === "dark" ? "dark" : "light"} // Set the theme dynamically
+      richColors // Enable rich colors
+    />
   );
 }

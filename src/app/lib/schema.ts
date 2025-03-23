@@ -9,14 +9,19 @@ export const onboardingSchema = z.object({
     }),
     bio: z.string().max(500).optional(),
     experience: z
-        .string()
+        .string({
+            required_error: "Experience is required",
+        })
         .trim()
         .min(1, "Experience is required") // Ensures input is not empty
+        .transform((val) => {
+            const num = Number(val);
+            if (isNaN(num)) throw new Error("Experience must be a valid number");
+            return num;
+        })
         .pipe(
             z
-                .number({
-                    invalid_type_error: "Experience must be a valid number", // Handles NaN cases
-                })
+                .number()
                 .min(0, "Experience must be at least 0 years")
                 .max(50, "Experience cannot exceed 50 years")
         ),

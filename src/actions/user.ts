@@ -4,9 +4,9 @@ import { DemandLevel, MarketOutlook, User } from '@prisma/client';
 import { authenticateUser } from "@/lib/authenticateUser"
 
 //*  update user data 
-export async function updateUser(data: User) {
+export async function updateUser(data: Partial<User>) {
 
-    // check wheather user is authenticated or not
+    // check weather user is authenticated or not
     const user = await authenticateUser();
 
     try {
@@ -46,10 +46,10 @@ export async function updateUser(data: User) {
                         id: user.id
                     },
                     data: {
-                        industry: data.industry,
-                        experience: data.experience,
-                        bio: data.bio,
-                        skill: data.skill
+                        industry: data.industry ?? undefined,  // Keeps existing industry if not provided
+                        experience: data.experience ?? undefined,
+                        bio: data.bio ?? undefined,
+                        skill: data.skill ?? undefined
                     }
                 })
 
@@ -59,7 +59,7 @@ export async function updateUser(data: User) {
             { timeout: 10000 }  // default: 5000
         )
 
-        return result.updatedUser
+        return { success: true, ...result }
 
     } catch (error) {
         console.error("Error updating user and industry: ", (error as Error).message);
@@ -74,7 +74,7 @@ export async function getUserOnboardingStatus() {
     const user = await authenticateUser();
 
     try {
-        return { isOnboard: !!user.industry }; 
+        return { isOnboard: !!user.industry };
     } catch (error) {
         console.error("Error checking onboarding status: ", (error as Error).message);
         throw new Error("Failed to check onboarding status");
