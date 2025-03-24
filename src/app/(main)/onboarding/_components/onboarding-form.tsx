@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { onboardingFormData, onboardingSchema } from "@/app/lib/schema";
+import { onboardingFormData, onboardingSchema } from "@/app/schema/onboardingSchema";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";

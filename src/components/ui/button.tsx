@@ -10,16 +10,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-b from-blue-400 to-blue-700 text-white px-6 py-3 rounded-lg shadow-md hover:from-blue-300 hover:to-blue-600 transition",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-black text-white dark:bg-white dark:text-black shadow-xs hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground bg-gray-100 dark:bg-white/10 dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+  "bg-gradient-to-b from-blue-400 to-blue-700 text-white px-6 py-3 rounded-lg shadow-md hover:from-blue-300 hover:to-blue-600 transition cursor-pointer",
+destructive:
+  "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive hover:dark:bg-destructive/80 cursor-pointer",
+outline:
+  "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 hover:dark:text-white cursor-pointer",
+secondary:
+  "bg-black text-white dark:bg-white dark:text-black shadow-xs hover:bg-black/80 dark:hover:bg-gray-200 dark:hover:text-black cursor-pointer",
+ghost:
+  "hover:bg-accent hover:text-accent-foreground bg-gray-100 dark:bg-white/10 dark:hover:bg-accent/50 hover:text-black dark:hover:text-white cursor-pointer",
+link:
+  "text-primary underline-offset-4 hover:underline cursor-pointer hover:text-blue-600 dark:hover:text-blue-400",
+
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

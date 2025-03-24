@@ -32,7 +32,7 @@ const Header = async () => {
   await checkUser();
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white/5 backdrop-blur-lg z-50 border-b border-border shadow-md">
+    <nav className="fixed h-16 top-0 left-0 w-full bg-white/5 backdrop-blur-lg z-50 border-b border-border shadow-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4 md:px-0">
         {/* Logo */}
         <Link href="/">

@@ -1,3 +1,5 @@
+"use server"
+
 import { ApiRoute } from "@/constants/routes";
 import { authenticateUser } from "@/lib/authenticateUser"
 import db from "@/lib/prisma";
@@ -58,6 +60,7 @@ export async function getResume() {
 }
 
 //* improve resume with AI
+//* improve resume with AI
 export async function improveWithAi({ current, type }: { current: any; type: any }) {
     const user = await authenticateUser();
 
@@ -79,9 +82,10 @@ export async function improveWithAi({ current, type }: { current: any; type: any
     `;
 
     try {
-        const result = await model.generateContent({ prompt });
-        const response = await result.response;
-        const improvedContent = response.text().trim();
+        if (typeof model === "undefined") throw new Error("model is not available");
+
+        const result = await model.generateContent(prompt);  // Ensure `await` is used for async operations
+        const improvedContent = result.response.text().trim();
 
         return improvedContent;
     } catch (error) {
@@ -89,4 +93,5 @@ export async function improveWithAi({ current, type }: { current: any; type: any
         throw new Error("There was an issue processing your request. Please try again later.");
     }
 }
+
 
