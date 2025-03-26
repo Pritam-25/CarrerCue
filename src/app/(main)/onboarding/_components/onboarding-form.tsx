@@ -22,7 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { onboardingFormData, onboardingSchema } from "@/app/schema/onboardingSchema";
+import {
+  onboardingFormData,
+  onboardingSchema,
+} from "@/app/lib/schema/onboardingSchema";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -66,7 +69,7 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
 
   const onSubmit = async (values: onboardingFormData) => {
     console.log(values);
-    
+
     const formattedIndustry = `${values.industry}-${values.subIndustry}`
       .toLowerCase()
       .replace(/ /g, "-");

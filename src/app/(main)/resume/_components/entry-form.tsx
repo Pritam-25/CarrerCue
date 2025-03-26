@@ -1,5 +1,5 @@
 "use client";
-import { entryFormData, entrySchema } from "@/app/schema/entrySchema";
+import { entryFormData, entrySchema } from "@/app/lib/schema/entrySchema";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -34,10 +34,10 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 
-export type ExperienceType = "Experience" | "Projects" | "Education";
+export type ResumeKeys = "Experience" | "Projects" | "Education";
 
 interface EntryFormProps {
-  type: ExperienceType;
+  type: ResumeKeys;
   entries: entryFormData[];
   onChange: (entries: entryFormData[]) => void;
 }
@@ -233,7 +233,10 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
                 name="startDate"
                 render={({ field }) => (
                   <div className="w-full">
-                    <Label htmlFor="start-date" className="mb-2 block text-primary/80">
+                    <Label
+                      htmlFor="start-date"
+                      className="mb-2 block text-primary/80"
+                    >
                       Start Date
                     </Label>
                     <Popover open={openStart} onOpenChange={setOpenStart}>
@@ -285,7 +288,10 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
                 name="endDate"
                 render={({ field }) => (
                   <div className="w-full">
-                    <Label htmlFor="end-date" className="mb-2 block text-primary/80">
+                    <Label
+                      htmlFor="end-date"
+                      className="mb-2 block text-primary/80"
+                    >
                       End Date
                     </Label>
                     <Popover open={openEnd} onOpenChange={setOpenEnd}>
