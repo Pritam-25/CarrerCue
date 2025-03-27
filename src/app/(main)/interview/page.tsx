@@ -1,5 +1,11 @@
-export default function InterviewPage() {
+"use client"
+import Quiz from "./_components/quiz";
+
+export default function MockInterviewPag() {
     return (
-        <div>Interview Page</div>
+        <div>
+            {/* <Quiz/> */}
+            interview
+        </div>
     );
 }

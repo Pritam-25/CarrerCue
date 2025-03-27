@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { AlertTriangleIcon, Download, Edit, Loader2, Monitor, Save } from "lucide-react";
+import {
+  AlertTriangleIcon,
+  Download,
+  Edit,
+  Loader2,
+  Monitor,
+  Save,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +21,7 @@ import EntryForm from "./entry-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import React from "react";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 import MDEditor from "@uiw/react-md-editor";
 import {
   Mail,
@@ -82,20 +89,20 @@ export default function ResumeBuilder({
 
   const onsubmit = async () => {};
 
-  const generatePdf = () =>{
-    isGenerating(true)
-    try {
-      const element = document.getElementById("resume-pdf");
+  // const generatePdf = () =>{
+  //   isGenerating(true)
+  //   try {
+  //     const element = document.getElementById("resume-pdf");
 
-      const opt = {
-        margin
-      }
+  //     const opt = {
+  //       margin
+  //     }
 
-      await html2pdf().set(opt)
-    } catch (error) {
-      
-    }
-  }
+  //     await html2pdf().set(opt)
+  //   } catch (error) {
+
+  //   }
+  // }
 
   // if initialcontent means resume is already present set tab to preview
   useEffect(() => {
@@ -161,7 +168,11 @@ export default function ResumeBuilder({
             <Save className="h-4 w-4" />
             Save
           </Button>
-          <Button size={"sm"} variant={"secondary"} onClick={generatePdf}>
+          <Button
+            size={"sm"}
+            variant={"secondary"}
+            // onClick={generatePdf}
+          >
             {isGenerating ? (
               <>
                 <Loader2 className="h-4 w-4" />

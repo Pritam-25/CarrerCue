@@ -4,10 +4,10 @@ import { ApiRoute } from "@/constants/routes";
 import { authenticateUser } from "@/lib/authenticateUser"
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
