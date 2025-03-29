@@ -23,7 +23,7 @@ import QuizResult from "./quiz-result";
 
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<(string | null)[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
   const [showExplanation, setShowExplanation] = useState(false);
 
   const {
@@ -93,24 +93,22 @@ export default function Quiz() {
     return <BarLoader className="mt-4" width={"100%"} color="blue" />;
   }
 
-
-  const startNewQuiz = ()=>{
+  const startNewQuiz = () => {
     setCurrentQuestion(0);
     setAnswers([]);
     setShowExplanation(false);
     generateQuizFn();
     setResultData(undefined);
+  };
+
+  //   show results if quiz is complete
+  if (resultData) {
+    return (
+      <div className="mx-2">
+        <QuizResult result={resultData} onStartNew={startNewQuiz} />
+      </div>
+    );
   }
-
-
-//   show results if quiz is complete
-if(resultData){
-    return(
-        <div className="mx-2">
-            <QuizResult result = {resultData} onStartNew = {startNewQuiz}/>
-        </div>
-    )
-}
 
   if (!quizData) {
     return (
@@ -208,7 +206,9 @@ if(resultData){
         </CardFooter>
       </Card>
       <div className="flex justify-end">
-        <Button disabled={savingResult || !(currentQuestion === quizData.length - 1)} onClick={finishQuiz}
+        <Button
+          disabled={savingResult || !(currentQuestion === quizData.length - 1)}
+          onClick={finishQuiz}
         >
           {savingResult ? (
             <>

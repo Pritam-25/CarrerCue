@@ -26,10 +26,10 @@ export async function generateQuiz() {
   const user = await authenticateUser();
 
   const prompt = `
-    Generate 3 technical interview questions for a ${user.industry
+    Generate 10 technical interview questions for a ${user.industry
     } professional${user.skills?.length ? ` with expertise in ${user.skills.join(", ")}` : ""
     }.
-    
+    Don't generate same question again and again, generate new question every time, repetition should minimal.
     Each question should be multiple choice with 4 options.
     
     Return the response in this JSON format only, no additional text:
@@ -123,6 +123,25 @@ export async function saveQuizResult(questions: Question[], answers: string[], s
     console.error("Error saving quiz result:", (error as Error).message);
     throw new Error("Failed to save quiz result");
   }
+}
 
 
+export async function getAssessments() {
+  const user = await authenticateUser();
+
+  try {
+    const assessment = await db.assessment.findMany({
+      where: {
+        userId: user.id
+      },
+      orderBy: {
+        createdAt: "asc"
+      }
+    })
+
+    return assessment;
+  } catch (error) {
+    console.error("Error fetching assessments:", (error as Error).message);
+    throw new Error("Failed to fetch assessments");
+  }
 }

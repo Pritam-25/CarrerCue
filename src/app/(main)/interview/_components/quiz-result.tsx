@@ -19,12 +19,12 @@ export default function QuizResult({
   return (
     <div className="mx-auto max-w-4xl p-4">
       {/* Title */}
-      <h1 className="flex items-center gap-2 text-3xl font-semibold text-gradient">
+      <h1 className="flex items-center justify-center pb-10 gap-2 text-3xl font-bold     text-gradient">
         <Trophy className="h-6 w-6 text-yellow-500" aria-label="Trophy Icon" />
         Quiz Results
       </h1>
 
-      <CardContent>
+      <CardContent>     
         {/* Score Overview */}
         <div className="text-center space-y-2">
           <p className="text-2xl font-bold">
